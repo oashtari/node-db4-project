@@ -7,7 +7,7 @@ module.exports = {
 }
 
 function getRecipes() {
-
+    return db('recipes');
 };
 
 function getShoppingList(id) {

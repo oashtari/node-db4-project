@@ -5,6 +5,16 @@ const Recipes = require('./recipe-model');
 const router = express.Router();
 
 
+router.get('/', (req, res) => {
+    Recipes.getRecipes()
+        .then(recipes => {
+            res.json(recipes);
+        })
+        .catch(err => {
+            res.status(500).json({ message: 'Failed to get schemes' });
+        });
+});
+
 
 
 
@@ -20,13 +30,6 @@ module.exports = router;
 // - `GET /api/recipes/:id/instructions`: a correctly ordered list of how to prepare a single recipe
 // - `GET /api/ingredients/:id/recipes`: all recipes in the system that utilize a single ingredient 
 
-
-// const express = require('express');
-
-// // const db = require('../data/db-config.js');
-// const Schemes = require('./scheme-model.js');
-
-// const router = express.Router();
 
 // router.get('/', (req, res) => {
 //   Schemes.find()
