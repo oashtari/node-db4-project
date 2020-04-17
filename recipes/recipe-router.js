@@ -11,12 +11,58 @@ router.get('/', (req, res) => {
             res.json(recipes);
         })
         .catch(err => {
-            res.status(500).json({ message: 'Failed to get schemes' });
+            res.status(500).json({ message: 'Failed to get recipes' });
         });
 });
 
+router.get('/:id/list', (req, res) => {
 
+    const { id } = req.params;
 
+    Recipes.getShoppingList(id)
+        .then(list => {
+            if (list) {
+                res.status(200).json(list)
+            } else {
+                res.status(404).json({ message: 'Could not find list for given recipe' })
+            }
+        })
+        .catch(err => {
+            res.status(500).json({ message: 'Failed to get any shopping list' });
+        });
+})
+
+router.get('/:id/instructions', (req, res) => {
+    const { id } = req.params;
+
+    Recipes.getInstructions(id)
+        .then(steps => {
+            if (steps) {
+                res.status(200).json(steps)
+            } else {
+                res.status(404).json({ message: 'Could not find instructions for this recipe' })
+            }
+        })
+        .catch(err => {
+            res.status(500).json({ message: 'Failed to get any the instructions of any sort' });
+        });
+})
+
+// router.get('/:id/shoppinglist', (req, res) => {
+//     const id = req.params.id;
+
+//     recipeDB.getShoppingList(id)
+//         .then(shoppingList => {
+//             if (shoppingList) {
+//                 res.status(200).json(shoppingList);
+//             } else {
+//                 res.status(404).json({ message: "No ingredients found" });
+//             }
+//         })
+//         .catch(error => {
+//             res.status(500).json({ message: "Error getting ingredients", error: error });
+//         })
+// });
 
 module.exports = router;
 

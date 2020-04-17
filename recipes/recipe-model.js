@@ -11,26 +11,21 @@ function getRecipes() {
 };
 
 function getShoppingList(id) {
-
+    return db('recipes as r')
+        .join('recipe_ingredients_instructions as rgi', 'r.id', '=', 'rgi.recipe_id')
+        .join('ingredients as i', 'i.id', '=', 'rgi.ingredient_id')
+        .select('r.recipe_name', 'i.ingredient_name', 'rgi.quantity')
+        .where({ 'r.id': id })
 };
 
 function getInstructions(id) {
-
+    return db('recipes as r')
+        .join('recipe_ingredients_instructions as rgi', 'r.id', '=', 'rgi.recipe_id')
+        .select('r.recipe_name', 'rgi.description', 'rgi.recipe_steps')
+        .where({ 'r.id': id })
 };
 
 
-// In addition to the `migrations` and `seeding` scripts, write a data access file that **exports** an object with the following functions:
-
-// - `getRecipes()`: should return a list of all recipes in the database.
-// - `getShoppingList(recipe_id)`: should return a list of all ingredients and quantities for a given recipe
-// - `getInstructions(recipe_id)`: should return a list of step by step instructions for preparing a recipe
-
-// Organize and name your files anyway you see fit.
-
-
-// function find() {
-//     return db('schemes');  //
-// }
 
 // function findById(id) {
 //     return db('schemes')
